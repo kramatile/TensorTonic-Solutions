@@ -1,22 +1,15 @@
 import numpy as np
 
-def entropy_node(y):
+def entropy_node(y: list[int]) -> float:
     """
-    Compute entropy for a single node using stable logarithms.
+    Returns the Shannon entropy as a Python float.
     """
-    if not y : 
-        return 0.0
+    y = np.asarray(y,dtype=int)
+    classes, counts = np.unique(y,return_counts=True)
+    probabilities = counts / len(y)
+    class_counts = dict(zip(classes,probabilities))
+    entropy = 0.0
+    for k,v in class_counts.items():
+        entropy -= v*np.log2(v)
+    return entropy
         
-    elif len(y)==0:
-        return 0.0
-        
-    entropy = 0
-    values, counts = np.unique(y,return_counts=True)
-    print(np.unique(y,return_counts=True))
-    total_counts = np.sum(counts)
-    for v,c in zip(values,counts):
-        p = c/total_counts
-        if p == 0 :
-            continue
-        entropy += p * np.log2(p)
-    return -entropy
