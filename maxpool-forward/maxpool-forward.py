@@ -7,10 +7,12 @@ def maxpool_forward(X: list, pool_size: int, stride: int) -> list:
     out = [[0.0 for _ in range(w_out)] for _ in range(h_out)]
     for i in range(h_out):
         for j in range(w_out):
-            max = -float("inf")
-            for a in range(pool_size):
-                for b in range(pool_size):
-                    if max < X[int(i*stride+a)][int(j*stride+b)]:
-                        max = X[int(i*stride+a)][int(j*stride+b)]
-            out[i][j] = max
+            r_start, r_end = i * stride, i * stride + pool_size
+            c_start, c_end = j * stride, j * stride + pool_size
+            maximum = max(
+                val for 
+                row in X[r_start:r_end]
+                for val in row[c_start:c_end]
+            )
+            out[i][j] = maximum
     return out
