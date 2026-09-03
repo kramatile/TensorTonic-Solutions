@@ -10,12 +10,6 @@ def knn_distance(X_train: list, X_test: list, k: int) -> np.ndarray:
         return np.empty((0, k), dtype=int)
     if X_train.size == 0:
         return np.empty((0, k), dtype=int)
-
-    if X_train.ndim == 1:
-        X_train = X_train[:, np.newaxis]
-    if X_test.ndim == 1:
-        X_test = X_test[:, np.newaxis]
-
     arg_distances = []
     for x_test in X_test: 
         distances = (X_train - x_test)**2
